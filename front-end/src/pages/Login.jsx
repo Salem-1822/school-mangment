@@ -1,8 +1,8 @@
-
-
+import StudentLogin from "@/components/Students/StudentLogin.jsx"
 
 export default function Login() {
      return <>
-            <h1 className={'text-3xl'}>hi from loginV1</h1>
+            <h1 className={'text-3xl'}>Student Login</h1>
+            <StudentLogin />
      </>
 }

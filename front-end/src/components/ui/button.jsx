@@ -1,9 +1,9 @@
 import { Button as ButtonPrimitive } from "@base-ui/react/button"
 
-export default function Button() {
+export default function Button({ children, ...props }) {
   return (
-    <ButtonPrimitive>
-      Test Button
+    <ButtonPrimitive {...props}>
+      {children}
     </ButtonPrimitive>
   )
 }
