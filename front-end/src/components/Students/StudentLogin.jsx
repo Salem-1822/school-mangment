@@ -48,7 +48,9 @@ export default function StudentLogin() {
       console.log("VALUES SENT:", values)
 
       // Get CSRF cookie
-      await axiosClient.get("/sanctum/csrf-cookie")
+      await axiosClient.get("/sanctum/csrf-cookie",{
+        baseURL: import.meta.env.VITE_BACKEND_URL
+      })
 
       // Login
       const response = await axiosClient.post("/login", values)
@@ -57,7 +59,10 @@ export default function StudentLogin() {
       console.log("LOGIN RESPONSE:", response.data)
 
       // Redirect to Student Dashboard
-      navigate("/student/dashboard")
+      if (response.status ===200){
+        window.localStorage.setItem('token',response.data.token)
+        navigate("/student/dashboard")
+      }
 
     } catch (error) {
       console.log("LOGIN STATUS:", error.response?.status)
