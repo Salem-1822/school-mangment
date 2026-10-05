@@ -1,0 +1,25 @@
+[33mcommit 39fc9de5be8fc4386546e47d0ff2f00918616b59[m
+Author: salem <salemzaafrou@gmail.com>
+Date:   Thu Sep 24 14:10:52 2026 +0000
+
+    feat: implement student login and dashboard navigation
+
+ back-end/database/seeders/DatabaseSeeder.php       |   5 [32m+[m[31m-[m
+ front-end/package-lock.json                        | 455 [32m++++++++++++++++[m[31m-----[m
+ front-end/package.json                             |   6 [32m+[m[31m-[m
+ front-end/src/Layout/Layout.jsx                    | 115 [32m++[m[31m----[m
+ front-end/src/axiosClient.js                       |   9 [32m+[m
+ front-end/src/components/Students/StudentLogin.jsx | 190 [32m+++++++++[m
+ front-end/src/components/ui/button.jsx             |   6 [32m+[m[31m-[m
+ front-end/src/components/ui/card.jsx               | 120 [32m++++++[m
+ front-end/src/components/ui/field.jsx              | 247 [32m+++++++++++[m
+ front-end/src/components/ui/form.jsx               |  95 [32m+++++[m
+ front-end/src/components/ui/input.jsx              |  18 [32m+[m
+ front-end/src/components/ui/label.jsx              |  20 [32m+[m
+ front-end/src/components/ui/separator.jsx          |  24 [32m++[m
+ front-end/src/pages/Login.jsx                      |   6 [32m+[m[31m-[m
+ front-end/src/pages/NotFound.jsx                   |   5 [31m-[m
+ front-end/src/pages/Register.jsx                   |   6 [31m-[m
+ front-end/src/pages/users.jsx                      |   5 [31m-[m
+ front-end/src/router/index.jsx                     |  55 [32m+[m[31m--[m
+ 18 files changed, 1147 insertions(+), 240 deletions(-)

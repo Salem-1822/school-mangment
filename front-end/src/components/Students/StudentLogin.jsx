@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useNavigate } from "react-router-dom"
 import axiosClient from "@/axiosClient"
+import { useAuth } from "@/context/AuthContext"
 
 import {
   Form,
@@ -33,6 +34,7 @@ const formSchema = z.object({
 
 export default function StudentLogin() {
   const navigate = useNavigate()
+  const { setUser } = useAuth()
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -47,16 +49,19 @@ export default function StudentLogin() {
     try {
       console.log("VALUES SENT:", values)
 
-      // Get CSRF cookie
+      // 1. Get CSRF cookie (Sanctum SPA auth)
       await axiosClient.get("/sanctum/csrf-cookie")
 
-      // Login
-      const response = await axiosClient.post("/login", values)
+      // 2. Login
+      await axiosClient.post("/login", values)
 
-      console.log("LOGIN SUCCESS:", response.status)
-      console.log("LOGIN RESPONSE:", response.data)
+      // 3. Fetch authenticated user and push into global auth state
+      const { data } = await axiosClient.get("/api/user")
+      setUser(data)
 
-      // Redirect to Student Dashboard
+      console.log("LOGIN SUCCESS — user:", data)
+
+      // 4. Navigate to student dashboard
       navigate("/student/dashboard")
 
     } catch (error) {
@@ -157,34 +162,3 @@ export default function StudentLogin() {
     </div>
   )
 }
-// ```
-
-// دابا الـ flow ديالك هو:
-
-// ```text
-// Login
-//   ↓
-// GET /sanctum/csrf-cookie
-//   ↓
-// POST /login
-//   ↓
-// 200 OK
-//   ↓
-// navigate("/student/dashboard")
-//   ↓
-// Student Dashboard
-// ```
-
-// وبما أن `POST /login` عندك رجع بالفعل `200`، المفروض دابا منين تضغط **Login** تمشي مباشرة لـ:
-
-// ```text
-// http://localhost:3000/student/dashboard
-// ```
-
-// وتشوف:
-
-// ```text
-// hello from dashboard
-// ```
-
-// إلا وقع هادشي، فالمرحلة ديال **Login → Dashboard** خدامة.
